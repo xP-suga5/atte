@@ -16,14 +16,14 @@ use App\Http\Controllers\RestController;
 */
 
 
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::middleware('auth')->group(function () {
+    Route::get('/', [AttendanceController::class, 'index'])->name('index');
+    Route::get('/attendance', [AttendanceController::class, 'getAttendance'])->name('attendance');
+    Route::post('/attendance/start', [AttendanceController::class, 'create'])->name('attendance.start');
+    Route::post('/attendance/end', [AttendanceController::class, 'update'])->name('attendance.end');
+    Route::post('/rest/start', [RestController::class, 'create'])->name('rest.start');
+    Route::post('/rest/end', [RestController::class, 'update'])->name('rest.end');
+});
 
 require __DIR__.'/auth.php';
 
-Route::get('/', [AttendanceController::class, 'index'])->name('index');
-Route::get('/attendance', [AttendanceController::class, 'getAttendance'])->name('attendance');
-Route::post('/attendance/start', [AttendanceController::class, 'create'])->name('attendance.start');
-Route::post('/attendance/end', [AttendanceController::class, 'update'])->name('attendance.end');

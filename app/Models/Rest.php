@@ -24,7 +24,7 @@ class Rest extends Model
                 sec_to_time(sum(time_to_sec(SUBTIME(end_rest, start_rest)))) as total_rest_time"
             ))
             ->groupBy('attendance_id')
-            ->get();
+            ->toSql();
     }
 
 

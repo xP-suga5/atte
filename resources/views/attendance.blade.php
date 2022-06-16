@@ -5,11 +5,10 @@
   <div>
     <form action="{{ route('attendance') }}" method="GET">
       <button type="submit" name="ago">＜</button>
-      {{ $today }}
+      {{ $date }}
       <button type="submit" name="later">＞</button>
     </form>
   </div>
-
 
   <div class="container flex justify-center mx-auto">
     <div class="flex flex-col">
@@ -32,46 +31,26 @@
                   <td class="px-6 py-2 text-gray-500">{{ $attendance->user->name }}</td>
                   <td class="px-6 py-2 text-gray-500">{{ $attendance->start_time }} </td>
                   <td class="px-6 py-2 text-gray-500">{{ $attendance->end_time }}</td>
+                  <td class="px-6 py-2 text-gray-500">{{ $attendance->total_rest_time }}</td>
                   <td class="px-6 py-2 text-gray-500">
-                    @foreach ($rests as $rest)
-                      @if ($attendance->id === $rest->attendance_id)
-                        {{ ($rest->total_rest_time) }}
-                      @endif
-                    @endforeach
+                    @if (isset($attendance->total_rest_time))
+                      {{ $attendance->total_work_time }}
+                    @else
+                      {{ $attendance->work_time }}
+                    @endif
                   </td>
-                  <td class="px-6 py-2 text-gray-500">{{ $attendance->total_work_time}}</td>
                   <td class="px-6 py-2 text-gray-500">{{ $attendance->date }}</td>{{-- 後で消す --}}
                 </tr>
               @endforeach
             </tbody>
           </table>
         </div>
-        {{--{{ $attendances->links() }}--}}
+        {{ $attendances->links() }}
       </div>
-
-
-            {{-- 後で消す --}}
-      {{--@foreach ($rests as $rest)
-      <td class="px-6 py-2 text-gray-500">
-        @if ($attendance->id === $rest->attendance_id)
-          {{ $rest->total_rest_time }}
-          @php
-            $t1 = strtotime($rest->total_rest_time);
-            $t2 = strtotime($attendance->total_work_time);
-            $diff = $t2 - $t1;
-            $work_time = date('H:i:s', $diff);
-          @endphp
-        @endif
-      </td>
-      <td class="px-6 py-2 text-gray-500">{{ $work_time }}</td>
-    @endforeach--}}
 
       {{-- 後で消す --}}
       @php
-        dump($today);
-      @endphp
-      @php
-        dump($rests);
+        dump($date);
       @endphp
       @php
         dump($attendances);

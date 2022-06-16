@@ -13,17 +13,76 @@
             <form action="{{ route('attendance.start') }}" method="POST">
               @csrf
               @method('POST')
-              <button type="submit" class="btn btn-primary">出勤</button>
+              @if (isset($conf_date[0]->date))
+                <button type="submit" class="px-2 py-1 bg-gray-400 text-xl text-white font-semibold rounded"
+                  disabled>勤務開始</button>
+              @else
+                <button type="submit"
+                  class="px-2 py-1 bg-blue-400 text-xl text-white font-semibold rounded hover:bg-blue-500">勤務開始</button>
+              @endif
             </form>
           </li>
+
           <li>
             <form action="{{ route('attendance.end') }}" method="POST">
               @csrf
               @method('POST')
-              <button type="submit" class="btn btn-success">退勤</button>
+              @if (empty($conf_date[0]->date) or $conf_date[0]->end_time != null)
+                <button type="submit" class="px-2 py-1 bg-gray-400 text-xl text-white font-semibold rounded"
+                  disabled>勤務終了</button>
+              @else
+                <button type="submit"
+                  class="px-2 py-1 bg-blue-400 text-xl text-white font-semibold rounded hover:bg-blue-500">勤務終了</button>
+              @endif
             </form>
           </li>
+
+          @if (empty($conf_date[0]->date) or $conf_date[0]->end_time != null)
+            <li>
+              <form action="{{ route('rest.start') }}" method="POST">
+                @csrf
+                @method('POST')
+                <button type="submit" class="px-2 py-1 bg-gray-400 text-xl text-white font-semibold rounded"
+                  disabled>休憩開始</button>
+              </form>
+            </li>
+            <li>
+              <form action="{{ route('rest.end') }}" method="POST">
+                @csrf
+                @method('POST')
+                <button type="submit" class="px-2 py-1 bg-gray-400 text-xl text-white font-semibold rounded"
+                  disabled>休憩終了</button>
+              </form>
+            </li>
+          @elseif ($conf_date->count() > 0 or $conf_rest->end_rest != null )
+            <li>
+              <form action="{{ route('rest.start') }}" method="POST">
+                @csrf
+                @method('POST')
+                <button type="submit" class="px-2 py-1 bg-gray-400 text-xl text-white font-semibold rounded"
+                  disabled>休憩開始</button>
+                <button type="submit"
+                  class="px-2 py-1 bg-blue-400 text-xl text-white font-semibold rounded hover:bg-blue-500">休憩開始</button>
+              </form>
+            </li>
+            <li>
+              <form action="{{ route('rest.end') }}" method="POST">
+                @csrf
+                @method('POST')
+                <button type="submit" class="px-2 py-1 bg-gray-400 text-xl text-white font-semibold rounded"
+                  disabled>休憩終了</button>
+                <button type="submit"
+                  class="px-2 py-1 bg-blue-400 text-xl text-white font-semibold rounded hover:bg-blue-500">休憩終了</button>
+              </form>
+            </li>
+          @endif
         </ul>
       </div>
     </div>
+  </div>
+  {{-- 後で消す --}}
+  @php
+    dump($conf_date);
+    dump($conf_rest);
+  @endphp
 </x-app-layout>
