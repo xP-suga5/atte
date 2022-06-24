@@ -1,88 +1,50 @@
 <x-app-layout>
-  <x-slot name="header">
-    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-      {{ Auth::user()->name }}さんお疲れ様です。
+  <div class="index-container">
+    <h2 class="index-title">
+      {{ Auth::user()->name }}さんお疲れ様です!
     </h2>
-  </x-slot>
 
-  <div class="py-8">
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-      <div class="">
-        <ul>
-          <li>
-            <form action="{{ route('attendance.start') }}" method="POST">
-              @csrf
-              @method('POST')
-              @if (isset($conf_date[0]->date))
-                <button type="submit" class="px-2 py-1 bg-gray-400 text-xl text-white font-semibold rounded"
-                  disabled>勤務開始</button>
-              @else
-                <button type="submit"
-                  class="px-2 py-1 bg-blue-400 text-xl text-white font-semibold rounded hover:bg-blue-500">勤務開始</button>
-              @endif
-            </form>
-          </li>
-
-          <li>
-            <form action="{{ route('attendance.end') }}" method="POST">
-              @csrf
-              @method('POST')
-              @if (empty($conf_date[0]->date) or $conf_date[0]->end_time != null)
-                <button type="submit" class="px-2 py-1 bg-gray-400 text-xl text-white font-semibold rounded"
-                  disabled>勤務終了</button>
-              @else
-                <button type="submit"
-                  class="px-2 py-1 bg-blue-400 text-xl text-white font-semibold rounded hover:bg-blue-500">勤務終了</button>
-              @endif
-            </form>
-          </li>
-
-          @if (empty($conf_date[0]->date) or $conf_date[0]->end_time != null)
-            <li>
-              <form action="{{ route('rest.start') }}" method="POST">
-                @csrf
-                @method('POST')
-                <button type="submit" class="px-2 py-1 bg-gray-400 text-xl text-white font-semibold rounded"
-                  disabled>休憩開始</button>
-              </form>
-            </li>
-            <li>
-              <form action="{{ route('rest.end') }}" method="POST">
-                @csrf
-                @method('POST')
-                <button type="submit" class="px-2 py-1 bg-gray-400 text-xl text-white font-semibold rounded"
-                  disabled>休憩終了</button>
-              </form>
-            </li>
-          @elseif ($conf_date->count() > 0 or $conf_rest->end_rest != null )
-            <li>
-              <form action="{{ route('rest.start') }}" method="POST">
-                @csrf
-                @method('POST')
-                <button type="submit" class="px-2 py-1 bg-gray-400 text-xl text-white font-semibold rounded"
-                  disabled>休憩開始</button>
-                <button type="submit"
-                  class="px-2 py-1 bg-blue-400 text-xl text-white font-semibold rounded hover:bg-blue-500">休憩開始</button>
-              </form>
-            </li>
-            <li>
-              <form action="{{ route('rest.end') }}" method="POST">
-                @csrf
-                @method('POST')
-                <button type="submit" class="px-2 py-1 bg-gray-400 text-xl text-white font-semibold rounded"
-                  disabled>休憩終了</button>
-                <button type="submit"
-                  class="px-2 py-1 bg-blue-400 text-xl text-white font-semibold rounded hover:bg-blue-500">休憩終了</button>
-              </form>
-            </li>
+    <div class="index-wrapper">
+      <div class="index-box">
+        <form action="{{ route('attendance.start') }}" method="POST">
+          @csrf
+          @method('POST')
+          {{-- date_countが 0 の場合 on --}}
+          @if ($conf_contents['date_count'] == 0)
+            <button type="submit" class="index-box-button">勤務開始</button>
+          @else
+            <button type="submit" class="index-box-button disabled" disabled>勤務開始</button>
           @endif
-        </ul>
+        </form>
       </div>
+      <div class="index-box">
+        <form action="{{ route('attendance.end') }}" method="POST">
+          @csrf
+          @method('POST')
+          {{-- date_countが 0 ではない & end_time が null の場合 on --}}
+          @if ($conf_contents['date_count'] != 0 and empty($conf_contents['end_time']))
+            <button type="submit" class="index-box-button">勤務終了</button>
+          @else
+            <button type="submit" class="index-box-button disabled" disabled>勤務終了</button>
+          @endif
+        </form>
+      </div>
+      {{-- date_countが 0 の場合 or end_time が null でない場合  double off --}}
+      @if ($conf_contents['date_count'] == 0 or !empty($conf_contents['end_time']))
+        @include('rest-pattern.no-start-end')
+        {{-- start_restが null の場合 or end_rest が null でない場合  start on --}}
+      @elseif(empty($conf_contents['start_rest']) or !empty($conf_contents['end_rest']))
+        @include('rest-pattern.start')
+        {{-- start_restが null でない場合 end on --}}
+      @elseif(!empty($conf_contents['start_rest']))
+        @include('rest-pattern.end')
+      @endif
+      </ul>
     </div>
   </div>
-  {{-- 後で消す --}}
+  </div>
+  {{-- 後で消す  dump($conf_contents);--}}
   @php
-    dump($conf_date);
-    dump($conf_rest);
   @endphp
+  
 </x-app-layout>

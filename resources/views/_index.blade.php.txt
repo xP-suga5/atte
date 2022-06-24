@@ -1,0 +1,103 @@
+<x-app-layout>
+  <x-slot name="header">
+    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+      {{ Auth::user()->name }}さんお疲れ様です。
+    </h2>
+  </x-slot>
+
+  <div class="py-8">
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+      <div class="">
+        <ul>
+          <li>
+            <form action="{{ route('attendance.start') }}" method="POST">
+              @csrf
+              @method('POST')
+              @if (isset($conf_date[0]->date))
+                <button type="submit" class="px-2 py-1 bg-gray-400 text-xl text-white font-semibold rounded"
+                  disabled>勤務開始</button>
+              @else
+                <button type="submit"
+                  class="px-2 py-1 bg-blue-400 text-xl text-white font-semibold rounded hover:bg-blue-500">勤務開始</button>
+              @endif
+            </form>
+          </li>
+
+          <li>
+            <form action="{{ route('attendance.end') }}" method="POST">
+              @csrf
+              @method('POST')
+              @if (empty($conf_date[0]->date) or $conf_date[0]->end_time != null)
+                <button type="submit" class="px-2 py-1 bg-gray-400 text-xl text-white font-semibold rounded"
+                  disabled>勤務終了</button>
+              @else
+                <button type="submit"
+                  class="px-2 py-1 bg-blue-400 text-xl text-white font-semibold rounded hover:bg-blue-500">勤務終了</button>
+              @endif
+            </form>
+          </li>
+
+          @if (empty($conf_date[0]->date))
+            <li>
+              <form action="{{ route('rest.start') }}" method="POST">
+                @csrf
+                @method('POST')
+                <button type="submit" class="px-2 py-1 bg-gray-400 text-xl text-white font-semibold rounded"
+                  disabled>休憩開始</button>
+              </form>
+            </li>
+            <li>
+              <form action="{{ route('rest.end') }}" method="POST">
+                @csrf
+                @method('POST')
+                <button type="submit" class="px-2 py-1 bg-gray-400 text-xl text-white font-semibold rounded"
+                  disabled>休憩終了</button>
+              </form>
+            </li>
+          @elseif ($conf_date->count() > 0 or empty($conf_date->end_time))
+            @if (empty($conf_rest[0]->end_rest))
+              <li>
+                <form action="{{ route('rest.start') }}" method="POST">
+                  @csrf
+                  @method('POST')
+                  <button type="submit"
+                    class="px-2 py-1 bg-blue-400 text-xl text-white font-semibold rounded hover:bg-blue-500">休憩開始</button>
+                </form>
+              </li>
+              <li>
+                <form action="{{ route('rest.end') }}" method="POST">
+                  @csrf
+                  @method('POST')
+                  <button type="submit" class="px-2 py-1 bg-gray-400 text-xl text-white font-semibold rounded"
+                    disabled>休憩終了</button>
+                </form>
+              </li>
+            @else
+              <li>
+                <form action="{{ route('rest.start') }}" method="POST">
+                  @csrf
+                  @method('POST')
+                  <button type="submit" class="px-2 py-1 bg-gray-400 text-xl text-white font-semibold rounded"
+                  disabled>休憩開始</button>
+                </form>
+              </li>
+              <li>
+                <form action="{{ route('rest.end') }}" method="POST">
+                  @csrf
+                  @method('POST')
+                  <button type="submit"
+                  class="px-2 py-1 bg-blue-400 text-xl text-white font-semibold rounded hover:bg-blue-500">休憩終了</button>
+                </form>
+              </li>
+            @endif
+          @endif
+        </ul>
+      </div>
+    </div>
+  </div>
+  {{-- 後で消す --}}
+  @php
+    dump($conf_date);
+    dump($conf_rest);
+  @endphp
+</x-app-layout>

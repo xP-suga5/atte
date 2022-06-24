@@ -1,0 +1,203 @@
+/*common*/
+html {
+  font-size: 100%;
+}
+
+body {
+  font-family: "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro",
+    "Yu Gothic Medium", "游ゴシック Medium", sans-serif;
+  line-height: 1.7;
+}
+
+/*ナビゲーション*/
+.nav {
+  width: 100%;
+  padding: 10px 0;
+  margin: 0 auto;
+}
+
+.logo {
+  font-size: 30px;
+  font-weight: bold;
+  margin: 0 30px;
+  float: left;
+}
+
+.nav-list {
+  text-align: right;
+  padding: 10px 30px 10px 5px;
+  margin: 0 auto;
+}
+
+.nav-list-item {
+  list-style: none;
+  display: inline-block;
+  margin: 0 20px;
+
+}
+
+/*ログイン 登録*/
+.login,
+.register {
+  padding: 15px;
+  width: 400px;
+  min-height: 400px;
+  margin: 2% auto 0 auto;
+  text-align: center;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 30px 30px;
+}
+
+.login-form_text,
+.register-form_text {
+  font: 12px/24px;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 15px 0;
+  padding: 0.5em;
+  transition: 0.3s;
+  border: 1px solid #1b2538;
+  border-radius: 4px;
+  outline: none;
+}
+
+.login-form_submit,
+.register-form_submit {
+  font: 12px/24px;
+  color: #fff;
+  background-color: blue;
+  width: 100%;
+  margin: 15px 0;
+  padding: 0.5em;
+  transition: 0.3s;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.login-info,
+.register-info {
+  width: 100%;
+  margin-top: 15px;
+  text-align: center;
+  color: darkgray;
+}
+
+.login-info-link,
+.register-info-link {
+  color: blue;
+}
+
+/*フッター*/
+.footer {
+  color: #000;
+  font-size: 12px;
+  font-weight: bold;
+  margin: 10px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  bottom: 0;
+}
+
+@media only screen and (max-width: 640px) {
+  .footer {
+    position: relative;
+    left: 50%;
+    bottom: 0;
+    text-align: center;
+  }
+}
+
+/*index*/
+.index-container {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #eee;
+}
+
+.index-title {
+  font-size: 24px;
+  font-weight: bold;
+  padding: 20px;
+  text-align: center;
+}
+
+.index-wrapper {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 0 50px;
+  align-items: center;
+}
+
+.index-box {
+  width: 35%;
+  height: 250px;
+  background-color: #fff;
+  padding: 10px;
+  margin: 20px 30px;
+  font-size: 24px;
+  font-weight: bold;
+  position: relative;
+}
+
+.index-box-button {
+  display: block;
+  width: 100%;
+  height: 100%;
+  font-size: 24px;
+  font-weight: bold;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.disabled {
+  color: #eee;
+}
+
+/*日別一覧*/
+.attendance-search {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.search-text {
+  font-size: 20px;
+  font-weight: bold;
+  vertical-align: text-top;
+}
+
+.search-form_button {
+  height: 24px;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0 20px;
+  padding: 0 5px;
+  color: blue;
+  border: blue 1px solid;
+  vertical-align: middle;
+}
+
+.attendance-table {
+  width: 80%;
+  margin: 50px auto;
+}
+
+.attendance-table_th,
+.attendance-table_td {
+  border-top: solid 1px #ccc;
+  color: #000;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 20px;
+  text-align: left;
+}

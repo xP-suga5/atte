@@ -1,45 +1,41 @@
 <x-app-layout>
-  <x-slot name="header">
-    <h1>日別一覧</h1>
-  </x-slot>
-  <div>
+  <div class="attendance-search">
     <form action="{{ route('attendance') }}" method="GET">
-      <button type="submit" name="ago">＜</button>
-      {{ $date }}
-      <button type="submit" name="later">＞</button>
+      <input type="hidden" name="pre_date" class="search-form" id="pre_date" value=" {{ $date }}">
+      <button type="submit" for="pre_date" class="search-form_button">＜</button>
+    </form>
+    <span class="search-text">{{ $date }}</span>
+    <form action="{{ route('attendance') }}" method="GET">
+      <input type="hidden" name="post_date" class="search-form" id="post_date" value=" {{ $date }}">
+      <button type="submit" for="post_date" class="search-form_button">＞</button>
     </form>
   </div>
 
-  <div class="container flex justify-center mx-auto">
-    <div class="flex flex-col">
-      <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
-        <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-          <table class="min-w-full">
-            <thead class="border-b">
+  <div class="attendance-wrapper">
+          <table class="attendance-table">
+            <thead>
               <tr>
-                <th class="px-6 py-2 text-gray-500">名前</th>
-                <th class="px-6 py-2 text-gray-500">勤務開始</th>
-                <th class="px-6 py-2 text-gray-500">勤務終了</th>
-                <th class="px-6 py-2 text-gray-500">休憩時間</th>
-                <th class="px-6 py-2 text-gray-500">勤務時間</th>
-                <th class="px-6 py-2 text-gray-500"></th>
+                <th class="attendance-table_th">名前</th>
+                <th class="attendance-table_th">勤務開始</th>
+                <th class="attendance-table_th">勤務終了</th>
+                <th class="attendance-table_th">休憩時間</th>
+                <th class="attendance-table_th">勤務時間</th>
               </tr>
             </thead>
             <tbody>
               @foreach ($attendances as $attendance)
-                <tr class="border-b">
-                  <td class="px-6 py-2 text-gray-500">{{ $attendance->user->name }}</td>
-                  <td class="px-6 py-2 text-gray-500">{{ $attendance->start_time }} </td>
-                  <td class="px-6 py-2 text-gray-500">{{ $attendance->end_time }}</td>
-                  <td class="px-6 py-2 text-gray-500">{{ $attendance->total_rest_time }}</td>
-                  <td class="px-6 py-2 text-gray-500">
+                <tr>
+                  <td class="attendance-table_td">{{ $attendance->user->name }}</td>
+                  <td class="attendance-table_td">{{ $attendance->start_time }} </td>
+                  <td class="attendance-table_td">{{ $attendance->end_time }}</td>
+                  <td class="attendance-table_td">{{ $attendance->total_rest_time }}</td>
+                  <td class="attendance-table_td">
                     @if (isset($attendance->total_rest_time))
                       {{ $attendance->total_work_time }}
                     @else
                       {{ $attendance->work_time }}
                     @endif
                   </td>
-                  <td class="px-6 py-2 text-gray-500">{{ $attendance->date }}</td>{{-- 後で消す --}}
                 </tr>
               @endforeach
             </tbody>
