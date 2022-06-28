@@ -27,7 +27,7 @@
 
         <p class="register-info">アカウントをお持ちの方はこちらから</p>
         <div class="register-info-link">
-            <a class="" href="{{ route('login') }}">
+            <a href="{{ route('login') }}" class="register-info-link_a">
                 {{ __('ログイン') }}
             </a>
         </div>

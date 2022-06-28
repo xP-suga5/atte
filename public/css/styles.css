@@ -7,33 +7,68 @@ body {
   font-family: "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro",
     "Yu Gothic Medium", "游ゴシック Medium", sans-serif;
   line-height: 1.7;
+  background-color: #eee;
+}
+
+main {
+  height: 100%;
 }
 
 /*ナビゲーション*/
 .nav {
   width: 100%;
-  padding: 10px 0;
+  padding: 30px 0;
   margin: 0 auto;
+  background-color: #fff;
 }
 
 .logo {
   font-size: 30px;
   font-weight: bold;
-  margin: 0 30px;
+  margin: auto 30px;
   float: left;
 }
 
-.nav-list {
+.nav-menu {
   text-align: right;
-  padding: 10px 30px 10px 5px;
-  margin: 0 auto;
+  margin-left: auto;
+}
+
+.nav-list {
+  margin: auto 0;
 }
 
 .nav-list-item {
   list-style: none;
   display: inline-block;
-  margin: 0 20px;
+  margin: 0 30px;
+}
 
+.nav-list-item_a {
+  font-size: 18px;
+  font-weight: bold;
+  color: #000;
+  text-decoration: none;
+  width: 200px;
+  height: 100px;
+}
+
+.nav-list-item_button {
+  font-size: 18px;
+  font-weight: bold;
+  color: #000;
+  background-color: #fff;
+  border: none;
+}
+.nav-list-item_button:hover {
+  color: blue;
+}
+
+.menu {
+  display: none;
+}
+.drawer-nav {
+  display: none;
 }
 
 /*ログイン 登録*/
@@ -68,10 +103,11 @@ body {
 .login-form_submit,
 .register-form_submit {
   font: 12px/24px;
+  font-weight: bold;
   color: #fff;
   background-color: blue;
   width: 100%;
-  margin: 15px 0;
+  margin-top: 15px;
   padding: 0.5em;
   transition: 0.3s;
   border-radius: 4px;
@@ -81,9 +117,10 @@ body {
 .login-info,
 .register-info {
   width: 100%;
-  margin-top: 15px;
   text-align: center;
   color: darkgray;
+  margin-bottom: 0;
+  margin-top: 30px;
 }
 
 .login-info-link,
@@ -91,12 +128,21 @@ body {
   color: blue;
 }
 
+.login-info-link_a,
+.register-info-link_a {
+  color: blue;
+  font-weight: bold;
+  text-decoration: none;
+}
+
 /*フッター*/
 .footer {
+  width: 100%;
+  background-color: #fff;
   color: #000;
   font-size: 12px;
   font-weight: bold;
-  margin: 10px;
+  text-align: center;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
@@ -105,8 +151,8 @@ body {
   bottom: 0;
 }
 
-@media only screen and (max-width: 640px) {
-  .footer {
+@media only screen and (max-width: 768px) {
+  .footer_index {
     position: relative;
     left: 50%;
     bottom: 0;
@@ -117,14 +163,14 @@ body {
 /*index*/
 .index-container {
   width: 100%;
-  min-height: 100vh;
   background-color: #eee;
 }
 
 .index-title {
   font-size: 24px;
   font-weight: bold;
-  padding: 20px;
+  padding-top: 50px;
+  padding-bottom: 30px;
   text-align: center;
 }
 
@@ -139,20 +185,22 @@ body {
 .index-box {
   width: 35%;
   height: 250px;
-  background-color: #fff;
   padding: 10px;
   margin: 20px 30px;
-  font-size: 24px;
-  font-weight: bold;
   position: relative;
+  border: #fff 1px solid;
+  border-radius: 5px;
 }
 
 .index-box-button {
   display: block;
+  background-color: #fff;
   width: 100%;
   height: 100%;
   font-size: 24px;
   font-weight: bold;
+  border: #fff 1px solid;
+  border-radius: 5px;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -163,11 +211,23 @@ body {
   color: #eee;
 }
 
+@media only screen and (max-width: 768px) {
+  .index-wrapper {
+    flex-direction: column;
+  }
+  
+  .index-box {
+    width: 80%;
+    height: 150px;
+  }
+}
+
 /*日別一覧*/
 .attendance-search {
   display: flex;
   justify-content: center;
   margin: 20px 0;
+  padding: 30px;
 }
 
 .search-text {
@@ -177,7 +237,7 @@ body {
 }
 
 .search-form_button {
-  height: 24px;
+  height: 28px;
   font-size: 16px;
   font-weight: bold;
   margin: 0 20px;
@@ -185,6 +245,7 @@ body {
   color: blue;
   border: blue 1px solid;
   vertical-align: middle;
+  background-color: #fff;
 }
 
 .attendance-table {
@@ -198,6 +259,51 @@ body {
   color: #000;
   font-size: 16px;
   font-weight: bold;
-  padding: 20px;
+  padding: 30px;
+  margin: 30px 30px;
   text-align: left;
+}
+
+@media only screen and (max-width: 640px) {
+
+  .attendance-table {
+    width: 100%;
+  }
+
+  .attendance-table tr:first-child {
+    display: none;
+  }
+
+  .attendance-table_th,
+  .attendance-table_td {
+    display: block;
+    width: 100%;
+    border-bottom: none;
+    padding: 10px;
+    margin: 0;
+  }
+
+  .attendance-table_td {
+    display: block;
+    min-height: 50px;
+  }
+
+  .attendance-table_td:first-child {
+    border-top: #000 2px double;
+  }
+
+  .attendance-table_td:before {
+    content: attr(data-label);
+    color: darkgray;
+    float: left;
+    font-weight: bold;
+    margin-right: 10px;
+  }
+}
+
+/*ページネーション*/
+.page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

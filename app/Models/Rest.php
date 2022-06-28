@@ -27,6 +27,10 @@ class Rest extends Model
             ->toSql();
     }
 
+    public function scopeAttendanceId($query, $id)
+    {
+        return $query->where('attendance_id', $id)->orderBy('id', 'desc');
+    }
 
     public function attendance()
     {

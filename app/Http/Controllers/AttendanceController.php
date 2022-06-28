@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Rest;
 use App\Models\Attendance;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class AttendanceController extends Controller
@@ -15,13 +14,10 @@ class AttendanceController extends Controller
         $today = now()->format('Y-m-d');
         $user = Auth::user();
 
-        $conf_date = Attendance::where('user_id', $user->id)
-            ->whereDate('date', '=', $today)->get();
+        $conf_date = Attendance::useid($user->id)->date($today)->get();
 
         if ($conf_date->count() > 0) {
-            $conf_rest = Rest::where('attendance_id', $conf_date[0]->id)
-                ->orderBy('id', 'desc')
-                ->get();
+            $conf_rest = Rest::attendanceid($conf_date[0]->id)->get();
         } else {
             $conf_rest = [];
         }
@@ -35,34 +31,27 @@ class AttendanceController extends Controller
             'end_rest' => (isset($conf_rest[0]->end_rest)) ? $conf_rest[0]->end_rest : null,
         ];
 
-        //dd($conf_content);
-
         return view('index', compact('conf_contents'));
     }
 
     public function getAttendance(Request $request)
     {
         $today = now()->format('Y-m-d');
-        $date = $today;
+        $date = $date = $today;
 
         if ($request == "") {
-            $date = $today;
+            $date;
         } elseif ($request->pre_date != null) {
-            $date = date("Y-m-d", strtotime("$request->pre_date -1 day"));
+            $date = date("Y-m-d", strtotime("$request->pre_date"));
         } elseif ($request->post_date != null) {
-            $date = date("Y-m-d", strtotime("$request->post_date 1 day"));
+            $date = date("Y-m-d", strtotime("$request->post_date"));
         }
         $keyword = $date;
-        //dd($date);
 
         $this->rests = new Rest();
         $rests = $this->rests->getTotalRestTime();
 
-        $attendances = Attendance::selectRaw('
-                *,
-                sec_to_time(time_to_sec(SUBTIME(end_time, start_time))) as work_time,
-                sec_to_time((time_to_sec(SUBTIME(sec_to_time(time_to_sec(SUBTIME(end_time, start_time))), total_rest_time)))) as total_work_time
-            ')
+        $attendances = Attendance::row()
             ->from('attendances')
             ->leftJoinSub($rests, 'rests', function ($join) {
                 $join->on('attendances.id', '=', 'rests.attendance_id');
@@ -70,7 +59,6 @@ class AttendanceController extends Controller
             ->whereDate('date', '=', $keyword)
             ->orderByRaw('user_id')
             ->paginate(5)->withQueryString();
-
 
         return view('attendance', ['attendances' => $attendances, 'date' => $date]);
     }

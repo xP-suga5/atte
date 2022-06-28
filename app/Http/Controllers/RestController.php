@@ -16,7 +16,7 @@ class RestController extends Controller
         $today = now();
 
         $attendance = Attendance::where('user_id', $user->id)
-        ->whereDate('date', '=', $today)->first();
+            ->whereDate('date', '=', $today)->first();
 
         Rest::create([
             'attendance_id' => $attendance->id,
@@ -31,9 +31,11 @@ class RestController extends Controller
         $today = now();
 
         $attendance = Attendance::where('user_id', $user->id)
-        ->whereDate('date', '=', $today)->first();
+            ->whereDate('date', '=', $today)->first();
 
         Rest::where('attendance_id', $attendance->id)
+            ->orderBy('id', 'desc')
+            ->first()
             ->update([
                 'end_rest' => $today->format('H:i:s'),
             ]);

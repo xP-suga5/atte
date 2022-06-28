@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Atte') }}</title>
 
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
@@ -14,18 +14,17 @@
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
-
+    <link rel="stylesheet" href="{{ asset('css/menu.css') }}">
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/menu.js') }}"></script>
 </head>
 
-<body class="font-sans antialiased">
-    <div class="flex flex-col min-h-screen bg-gray-100">
+<body>
+    <div>
         @include('layouts.navigation')
 
-        <div class="flex-grow font-sans text-gray-900 antialiased">
-            {{ $slot }}
-        </div>
+        {{ $slot }}
         <div class="footer">Atte,inc</div>
     </div>
 </body>
