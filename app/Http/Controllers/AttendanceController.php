@@ -56,7 +56,7 @@ class AttendanceController extends Controller
             ->leftJoinSub($rests, 'rests', function ($join) {
                 $join->on('attendances.id', '=', 'rests.attendance_id');
             })
-            ->whereDate('date', '=', $keyword)
+            ->date($keyword)
             ->orderByRaw('user_id')
             ->paginate(5)->withQueryString();
 
