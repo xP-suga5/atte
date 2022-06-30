@@ -26,6 +26,7 @@
         @include('layouts.navigation')
 
         {{ $slot }}
+
         <div class="footer footer_index">Atte,inc</div>
     </div>
 </body>

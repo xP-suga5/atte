@@ -11,7 +11,7 @@ body {
 }
 
 main {
-  height: 100vh;
+  height: 100%;
 }
 
 /*ナビゲーション*/
@@ -152,9 +152,8 @@ main {
   -ms-transform: translateX(-50%);
   bottom: 0;
 }
-.footer_index {
 
-}
+.footer_index {}
 
 @media only screen and (max-height: 800px) {
 
@@ -280,13 +279,26 @@ main {
   text-align: left;
 }
 
-@media only screen and (max-width: 640px) {
+@media only screen and (max-height: 800px) {
+  .attendance-wrapper {
+    height: 100vh;
+  }
+}
+@media only screen and (max-width: 800px) {
+  .attendance-table_th,
+  .attendance-table_td {
+    font-size: 12px;
+    margin: 30px 10px;
+  }
+
+}
+@media only screen and (max-width: 600px) {
 
   .attendance-table {
     width: 100%;
   }
 
-  .attendance-table tr:first-child {
+  .attendance-table th {
     display: none;
   }
 
